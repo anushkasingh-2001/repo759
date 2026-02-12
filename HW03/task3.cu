@@ -56,6 +56,9 @@ int main(int argc, char** argv) {
   cudaEventCreate(&start);
   cudaEventCreate(&stop);
 
+  vscale<<<blocks, TPB>>>(dA, dB, n);
+  cudaDeviceSynchronize();   // warm-up launch
+
   cudaEventRecord(start, 0);
   vscale<<<blocks, TPB>>>(dA, dB, n);
   cudaEventRecord(stop, 0);
