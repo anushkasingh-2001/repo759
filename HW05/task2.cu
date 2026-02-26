@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
     float sum = 0.0f;
     CUDA_CHECK(cudaMemcpy(&sum, d_input, sizeof(float), cudaMemcpyDeviceToHost));
 
-    // Sample style in HW: print sum, then time
+    //  print sum, then time
     std::cout << sum << "\n";
     std::cout << ms << "\n";
 
