@@ -9,6 +9,10 @@
 # Load CUDA (adjust/remove if your cluster environment differs)
 module load nvidia/cuda/13.0.0
 
+# --- Compile task1 first ---
+nvcc task1.cu mmul.cu -Xcompiler -O3 -Xcompiler -Wall -Xptxas -O3 -lcublas -std=c++17 -o task1
+
+
 # Example run:
 # ./task1 <n> <n_tests>
 # ./task1 1024 20

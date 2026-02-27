@@ -9,6 +9,9 @@
 # Load CUDA (adjust if Euler uses a different module setup)
 module load nvidia/cuda/13.0.0
 
+#compile task2
+nvcc task2.cu scan.cu -Xcompiler -O3 -Xcompiler -Wall -Xptxas -O3-std c++17 -o task2
+
 set -e
 
 # Results file: columns = n  last_scan_value  time_ms
