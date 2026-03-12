@@ -35,6 +35,7 @@ int main(int argc, char** argv) {
     // First call only to get temp storage size
     cub::DeviceReduce::Sum(d_temp_storage, temp_storage_bytes, d_in, d_out, n);
     cudaMalloc(&d_temp_storage, temp_storage_bytes);
+    
 
     cudaEvent_t start, stop;
     cudaEventCreate(&start);
