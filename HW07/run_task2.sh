@@ -10,9 +10,12 @@ module load nvidia/cuda/13.0
 
 nvcc task2.cu count.cu -Xcompiler -O3 -Xcompiler -Wall -Xptxas -O3 -std=c++17 -o task2
 
-for p in {10..24}
+> task2_results.txt
+
+for p in {5..20}
 do
     n=$((2**p))
-    echo "n=$n"
-    ./task2 $n
+    t=$(./task2 $n | tail -n 1)
+    echo "$n $t" >> task2_results.txt
+    echo "Done n=$n"
 done

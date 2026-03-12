@@ -1,45 +1,32 @@
 import matplotlib.pyplot as plt
 
-n_vals = []
-thrust_vals = []
-cub_vals = []
-hw05_vals = []
+def read_two_col_file(filename):
+    xs = []
+    ys = []
+    with open(filename, "r") as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) != 2:
+                continue
+            xs.append(int(parts[0]))
+            ys.append(float(parts[1]))
+    return xs, ys
 
-# Put your HW05 reduction timings here if you have them
-# Example:
-# hw05_map = {
-#     1024: 0.020,
-#     2048: 0.025,
-# }
-hw05_map = {}
+n_hw05, t_hw05 = read_two_col_file("hw05_task2_results.txt")
+n_thrust, t_thrust = read_two_col_file("task1_thrust_results.txt")
+n_cub, t_cub = read_two_col_file("task1_cub_results.txt")
 
-with open("task1_results.txt", "r") as f:
-    for line in f:
-        parts = line.strip().split()
-        if len(parts) != 3:
-            continue
-        n = int(parts[0])
-        t_thrust = float(parts[1])
-        t_cub = float(parts[2])
+plt.figure(figsize=(8, 6))
 
-        n_vals.append(n)
-        thrust_vals.append(t_thrust)
-        cub_vals.append(t_cub)
-        hw05_vals.append(hw05_map.get(n, None))
-
-plt.figure()
-plt.loglog(n_vals, thrust_vals, marker='o', label='Thrust')
-plt.loglog(n_vals, cub_vals, marker='s', label='CUB')
-
-valid_hw05_n = [n for n, v in zip(n_vals, hw05_vals) if v is not None]
-valid_hw05_t = [v for v in hw05_vals if v is not None]
-if valid_hw05_n:
-    plt.loglog(valid_hw05_n, valid_hw05_t, marker='^', label='HW05 CUDA')
+plt.loglog(n_hw05, t_hw05, marker='o', label='HW05 CUDA reduction')
+plt.loglog(n_thrust, t_thrust, marker='s', label='HW07 Thrust reduction')
+plt.loglog(n_cub, t_cub, marker='^', label='HW07 CUB reduction')
 
 plt.xlabel("n")
 plt.ylabel("Time (ms)")
-plt.title("Reduction Scaling")
-plt.legend()
+plt.title("Reduction time vs n")
 plt.grid(True, which="both")
-plt.savefig("task1.pdf", bbox_inches="tight")
+plt.legend()
+plt.tight_layout()
+plt.savefig("task1.pdf")
 plt.show()
