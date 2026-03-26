@@ -7,11 +7,6 @@
 #SBATCH --gres=gpu:1
 #SBATCH -c 1
 
-module load nvidia/cuda/13.0.0
-
-clang++ -O3 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda \
--Xopenmp-target=nvptx64-nvidia-cuda --offload-arch=sm_61 \
--march=native -o task4 convolve.cpp task4.cpp
 
 csv_file="task4_times.csv"
 echo "n,time_ms" > "$csv_file"
