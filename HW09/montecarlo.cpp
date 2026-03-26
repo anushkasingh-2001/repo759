@@ -7,7 +7,7 @@ int montecarlo(const size_t n, const float *x, const float *y, const float radiu
 #ifdef USE_SIMD
 #pragma omp parallel reduction(+ : incircle)
   {
-#pragma omp for simd
+#pragma omp for simd schedule(static)
     for (size_t i = 0; i < n; i++) {
       const float xx = x[i];
       const float yy = y[i];
@@ -15,7 +15,7 @@ int montecarlo(const size_t n, const float *x, const float *y, const float radiu
     }
   }
 #else
-#pragma omp parallel for reduction(+ : incircle)
+#pragma omp parallel for reduction(+ : incircle) schedule(static)
   for (size_t i = 0; i < n; i++) {
     const float xx = x[i];
     const float yy = y[i];
