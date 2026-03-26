@@ -6,16 +6,18 @@
 #SBATCH -e task1_compare-%j.err
 #SBATCH -c 10
 
+module purge
+module load gcc/13.2.0
 
 g++ task1.cpp cluster_false_shar.cpp -Wall -O3 -std=c++17 -o task1_false -fopenmp
 g++ task1.cpp cluster.cpp            -Wall -O3 -std=c++17 -o task1_fixed -fopenmp
 
 csv_file="task1_false_vs_fixed.csv"
-echo "n,time_false_ms,time_fixed_ms" > "$csv_file"
+echo "t,time_false_ms,time_fixed_ms" > "$csv_file"
 
-t=10
+n=5040000
 
-for n in 630000 1260000 2520000 5040000 10080000 20160000; do
+for t in {1..10}; do
   total_false=0
   total_fixed=0
 
@@ -50,7 +52,7 @@ print(total / 10.0)
 PY
 )
 
-  echo "${n},${avg_false},${avg_fixed}" >> "$csv_file"
+  echo "${t},${avg_false},${avg_fixed}" >> "$csv_file"
 done
 
 echo "Saved timings to $csv_file"
