@@ -6,8 +6,6 @@
 #SBATCH -e task1_compare-%j.err
 #SBATCH -c 10
 
-module purge
-module load gcc/13.2.0
 
 g++ task1.cpp cluster_false_shar.cpp -Wall -O3 -std=c++17 -o task1_false -fopenmp
 g++ task1.cpp cluster.cpp            -Wall -O3 -std=c++17 -o task1_fixed -fopenmp
