@@ -6,6 +6,12 @@
 #SBATCH -e task2-%j.err
 #SBATCH -c 10
 
+module purge
+module load gcc/13.2.0
+
+export OMP_PROC_BIND=true
+export OMP_PLACES=cores
+
 g++ task2.cpp montecarlo.cpp -Wall -O3 -std=c++17 -o task2_nosimd -fopenmp -fno-tree-vectorize -march=native -fopt-info-vec
 g++ task2.cpp montecarlo.cpp -Wall -O3 -std=c++17 -DUSE_SIMD -o task2_simd -fopenmp -fno-tree-vectorize -march=native -fopt-info-vec
 
