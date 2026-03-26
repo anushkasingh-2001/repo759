@@ -6,9 +6,7 @@
 #SBATCH -e task3-%j.err
 #SBATCH --ntasks-per-node=2
 
-module load mpi/mpich/4.0.2
 
-mpicxx task3.cpp -Wall -O3 -o task3
 
 csv_file="task3_times.csv"
 echo "n,time_ms" > "$csv_file"
